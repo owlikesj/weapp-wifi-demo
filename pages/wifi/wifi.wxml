@@ -1,5 +1,5 @@
 <view>
-  <text>手机型号: {{platform}}</text>
+  <text>系统: {{platform}}</text>
 </view>
 <view class='error'>
   <text>{{startError}}</text>

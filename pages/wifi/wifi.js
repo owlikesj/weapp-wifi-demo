@@ -25,7 +25,7 @@ Page({
         if (res.platform == 'ios' && system < 11) {
           _this.setData({ startError: '手机版本暂时不支持' }); return
         }
-        _this.setData({ platform: res.platform + ' ' + res.system });
+        _this.setData({ platform: res.system });
         //初始化 Wi-Fi 模块
         _this.startWifi(_this);
       }
@@ -80,6 +80,9 @@ Page({
       success(res) {
         const [SSID, password = ''] = res.result.split(',')
         let isConnected = false
+        wx.showLoading({
+          title: '正在连接wifi',
+        })
         // 连接wifi
         wx.connectWifi({
           SSID,
@@ -88,15 +91,23 @@ Page({
             wx.onWifiConnected((res) => {
               if (!isConnected && res && res.wifi && res.wifi.SSID) {
                 isConnected = true
+                wx.hideLoading()
                 wx.showToast({
                   title: 'wifi连接成功',
                 })
               }
-            })           
+            })
+            setTimeout(() => {
+              if (isConnected) { return }
+              isConnected = true
+              wx.showToast({
+                title: 'wifi连接失败'
+              })
+            }, 8000)
           },
           fail: function (res) {
-            _this.setData({
-              scanError: res.errMsg
+            wx.showToast({
+              title: 'wifi连接失败'
             })
           }
         })

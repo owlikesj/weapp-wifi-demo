@@ -1,10 +1,4 @@
 /* pages/wifi/wifi.wxss */
-/* .error,.success{
-  margin-top: 300rpx;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-} */
 .info{
   width: 100%;
   display: flex;
