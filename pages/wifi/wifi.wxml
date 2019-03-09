@@ -1,0 +1,21 @@
+<view>
+  <text>手机型号: {{platform}}</text>
+</view>
+<view class='error'>
+  <text>{{startError}}</text>
+</view>
+<view class='error'>
+  <text>{{wifiError}}</text>
+</view>
+<view>
+  <text>SSID</text>
+  <input placeholder='请输入SSID' value='{{ssid}}' bindinput='bindSsidInput'></input>
+</view>
+<view>
+  <text>密码</text>
+  <input placeholder='请输入密码' value='{{password}}' bindinput='bindPasswordInput'></input>
+</view>
+<button bindtap='generateQrcode'>生成二维码</button>
+<button bindtap='saveQrcode'>保存二维码</button>
+<button bindtap='scanQrcode'>扫码连wifi</button>
+<canvas style="width: 200px; height: 200px;" canvas-id="myQrcode"></canvas>
