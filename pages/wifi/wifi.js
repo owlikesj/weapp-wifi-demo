@@ -28,9 +28,6 @@ Page({
         _this.setData({ platform: res.platform + ' ' + res.system });
         //初始化 Wi-Fi 模块
         _this.startWifi(_this);
-        wx.onWifiConnected((res) => {
-          console.log(res)
-        })
       }
     })
 
@@ -38,6 +35,11 @@ Page({
   bindSsidInput(e) {
     this.setData({
       ssid: e.detail.value
+    })
+  },
+  bindPasswordInput(e) {
+    this.setData({
+      password: e.detail.value
     })
   },
   generateQrcode() {
@@ -77,13 +79,15 @@ Page({
     wx.scanCode({
       success(res) {
         const [SSID, password = ''] = res.result.split(',')
+        let isConnected = false
         // 连接wifi
         wx.connectWifi({
           SSID,
           password,
           success: function () {
             wx.onWifiConnected((res) => {
-              if (res && res.wifi && res.wifi.SSID) {
+              if (!isConnected && res && res.wifi && res.wifi.SSID) {
+                isConnected = true
                 wx.showToast({
                   title: 'wifi连接成功',
                 })
